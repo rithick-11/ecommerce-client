@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Cookies from "js-cookie";
 import FromContainer from "../../components/FromContainer/FromContainer";
 import {
@@ -10,11 +10,16 @@ import {
 import server from "../../config/apiConfig";
 import { Navigate, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { UserAuthenticationContext } from "../../context/UserAuthenticationContext";
 
 const SignInUp = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [userFormData, setUserFormData] = useState(initUserForm);
   const [loginFormData, setLoginFormData] = useState(initLogInFromData);
+
+  const { getUserAuthentication, user, setUser } = useContext(
+    UserAuthenticationContext
+  );
 
   const navigate = useNavigate();
 
@@ -45,18 +50,23 @@ const SignInUp = () => {
       const res = await server.post("/api/users/login", loginFormData);
       if (res.status === 200) {
         Cookies.set("authEToken", res.data.token, { expires: 2 });
-        navigate("/");
+        getUserAuthentication();
+        setUser(pre => ({...pre, isAunthenticated: true, userInfo: res.data.userInfo}))
         toast(res.data.message);
-      }
+        navigate("/");
+      } 
       toast(res.data.message);
     } catch (err) {
       toast(err.response.data.message);
     }
   };
 
-  if (Cookies.get("authEToken") !== undefined) {
+  if (user.isAunthenticated) {
     return <Navigate to="/" />;
   }
+
+  console.log(user.isAunthenticated);
+  
 
   return (
     <div className="container h-screen w-screen flex justify-center items-center">
