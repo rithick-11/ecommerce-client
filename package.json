@@ -1,6 +1,6 @@
 {
   "homepage": "https://rithick-11.github.io/ecommerce-client",
-  "name": "front-end",
+  "name": "ecommerce-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
