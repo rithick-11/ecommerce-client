@@ -5,7 +5,7 @@ const CartItem = ({ data }) => {
   const { productId, quantity } = data;
   const {name, price, imgUrl, discount, brand , _id} = productId
   return (
-    <li className="flex gap-2 bg-white p-2 rounded-md flex justify-between">
+    <li className="gap-2 bg-white p-2 rounded-md flex justify-between">
       <div className="flex">
       <img
         src={imgUrl}

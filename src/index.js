@@ -6,10 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import UserAuthenticationContextProvider from "./context/UserAuthenticationContext";
 
+const url = process.env.API_SERVER_URL
+
+console.log(url);
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/ecommerce-client">
       <UserAuthenticationContextProvider>
         <App />
       </UserAuthenticationContextProvider>
