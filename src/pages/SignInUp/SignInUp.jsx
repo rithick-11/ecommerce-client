@@ -1,22 +1,38 @@
 import React, { useState } from "react";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import FromContainer from "../../components/FromContainer/FromContainer";
-import { createUserForm, initLogInFromData, initUserForm, logInFrom } from "../../config/formsData";
-import server from "../../config/apiConfig"
-import { Navigate } from "react-router-dom";
+import {
+  createUserForm,
+  initLogInFromData,
+  initUserForm,
+  logInFrom,
+} from "../../config/formsData";
+import server from "../../config/apiConfig";
+import { Navigate, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SignInUp = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [userFormData, setUserFormData] = useState(initUserForm);
-  const [loginFormData, setLoginFormData] = useState(initLogInFromData)
+  const [loginFormData, setLoginFormData] = useState(initLogInFromData);
+
+  const navigate = useNavigate();
 
   const handleUserForm = (e) => {
     const name = e.target.name;
     setUserFormData((pre) => ({ ...pre, [name]: e.target.value }));
   };
 
-  const onCreatNewUser = () => {
-    console.log(userFormData);
+  const onCreatNewUser = async () => {
+    try {
+      const res = await server.post("/api/users/create-user", userFormData);
+      if (res.status === 201) {
+        toast(res.data.message);
+        setShowLogin((pre) => !pre);
+      }
+    } catch (err) {
+      toast(err.response.data.message);
+    }
   };
 
   const handleLoginData = (e) => {
@@ -25,16 +41,21 @@ const SignInUp = () => {
   };
 
   const onUserLogin = async () => {
-    const res = await server.post("/api/users/login", loginFormData)
-    if(res.status === 200){
-        Cookies.set("authEToken", res.data.token, {expires: 2})
+    try {
+      const res = await server.post("/api/users/login", loginFormData);
+      if (res.status === 200) {
+        Cookies.set("authEToken", res.data.token, { expires: 2 });
+        navigate("/");
+        toast(res.data.message);
+      }
+      toast(res.data.message);
+    } catch (err) {
+      toast(err.response.data.message);
     }
-    console.log(res);
-    
   };
 
-  if(Cookies.get("authEToken") !== undefined){
-    return <Navigate to="/" />
+  if (Cookies.get("authEToken") !== undefined) {
+    return <Navigate to="/" />;
   }
 
   return (

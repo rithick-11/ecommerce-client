@@ -23,7 +23,7 @@ const AddProduct = () => {
   return (
     <div>
       <div className="bg-black/10 px-4 py-2 rounded-md shadow-md space-y-3">
-        <h1 className="text-lg font-semibold mt-3">Add product</h1>
+        <h1 className="text-2xl font-semibold mt-3">Add product</h1>
         <FromContainer
           renderFormList={productFormControls}
           formData={productFormData}
@@ -31,7 +31,6 @@ const AddProduct = () => {
           handleSubmit={toAddProduct}
           btnText="Add product"
         />
-        
       </div>
     </div>
   );

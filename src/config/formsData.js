@@ -3,24 +3,24 @@ export const createUserForm = [
         name:"name",
         type:"text",
         placeholder:"Enter name",
-        require: true,
-        lable:"Name",
+        required: true,
+        label:"Name",
         element:"input"
     },
     {
         name:"email",
         type:"email",
         placeholder:"Enter email",
-        require: true,
-        lable:"Email",
+        required: true,
+        label:"Email",
         element:"input"
     },
     {
         name:"password",
         type:"password",
         placeholder:"Enter password",
-        require: true,
-        lable:"Password",
+        required: true,
+        label:"Password",
         element:"input"
     },
 ]
@@ -30,16 +30,16 @@ export const logInFrom = [
         name:"email",
         type:"email",
         placeholder:"Enter email",
-        require: true,
-        lable:"Email",
+        required: true,
+        label:"Email",
         element:"input"
     },
     {
         name:"password",
         type:"password",
         placeholder:"Enter password",
-        require: true,
-        lable:"Password",
+        required: true,
+        label:"Password",
         element:"input"
     }
 ]
@@ -169,7 +169,7 @@ export const initLogInFromData = {
 }
 
 export const initialFormData = {
-    productName: '',
+    name: '',
     price: "0",
     description: '',
     category: 'men',

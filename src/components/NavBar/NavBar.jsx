@@ -1,4 +1,4 @@
-import { Heart, Menu, Search, ShoppingCart, User } from "lucide-react";
+import {Search, ShoppingCart, User } from "lucide-react";
 import Cookies from "js-cookie"
 import {Link} from "react-router-dom"
 
@@ -11,9 +11,9 @@ const NavBar = () => {
         <div className="container">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-gray-900">Comfort Zone</h1>
-            </div>
+            <Link to="/" className="flex-shrink-0">
+              <h1 className="text-2xl font-bold text-gray-900">Trend hyeee</h1>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
@@ -25,12 +25,9 @@ const NavBar = () => {
               <button className="icon-btn">
                 <Search className="icon-size" />
               </button>
-              <button className="icon-btn">
-                <Heart className="icon-size" />
-              </button>
-              <button className="icon-btn">
+              <Link to="/cart">
                 <ShoppingCart className="icon-size" />
-              </button>
+              </Link>
               {Cookies.get("authEToken") === undefined ? <Link to="sign-in-up" className="btn btn-primary">Sing in</Link> : <User className="icon-size" />}
             </div>
           </div>
