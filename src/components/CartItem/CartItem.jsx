@@ -2,8 +2,8 @@ import React from "react";
 
 const CartItem = ({ data }) => {
   console.log(data);
-  const { productId, quantity } = data;
-  const {name, price, imgUrl, discount, brand , _id} = productId
+  const { productId, quantity , price} = data;
+  const {name, imgUrl, discount, brand , _id} = productId
   return (
     <li className="gap-2 bg-white p-2 rounded-md flex justify-between">
       <div className="flex">
@@ -16,10 +16,10 @@ const CartItem = ({ data }) => {
         <h1>{name}</h1>
         <p>{brand}</p>
         <div className="text-black text-sm font-semibold flex flex-col gap-0 items-start">
-          <p>{price - (price / 100) * discount} Rs/-</p>
+          <p>{productId.price - (productId.price / 100) * discount} Rs/-</p>
 
           <p className="text-xs text-red-800 line-through">
-            {price} Rs/-
+            {productId.price} Rs/-
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@
         @apply h-6 w-6 text-gray-950;
     }
     .btn{
-        @apply px-2 py-1 rounded-md shadow-sm outline-none; 
+        @apply px-2 py-1 rounded-md shadow-sm outline-none text-sm font-sans; 
     }
     .btn-primary{
         @apply bg-gray-800 text-white/90 hover:text-white hover:bg-gray-600;

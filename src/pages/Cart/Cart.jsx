@@ -12,9 +12,6 @@ export const Cart = () => {
   );
 
   const getCartProduct = async () => {
-    if(!user.isAunthenticated){
-      return
-    }
     setCartList((pre) => ({ ...pre, isLoading: true }));
     try {
       const res = await server.get("/api/users/cart");
@@ -25,12 +22,14 @@ export const Cart = () => {
     setCartList((pre) => ({ ...pre, isLoading: false }));
   };
   useEffect(() => {
-    getCartProduct();
+    if(user.isAunthenticated){
+      getCartProduct()
+    }
   }, []);
 
   console.log(user)
   return (
-    <div className="container mt-20 ">
+    <div className="container py-3 ">
       {user.isAunthenticated ? cartList.isLoading ? <p>loading</p> : <CartList data={cartList.data} /> : <LoginView />}
     </div>
   );

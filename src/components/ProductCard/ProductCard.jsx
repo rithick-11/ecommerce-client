@@ -1,11 +1,19 @@
 import React from "react";
 import server from "../../config/apiConfig"
 import { FaCartShopping } from "react-icons/fa6";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ data }) => {
 
   const onAddCart = async () => {
-    await server.post("/api/users/addCard", {productId: data._id, quantity: 1, price:data.price - (data.price / 100) * data.discount })
+    try{
+      await server.post("/api/users/addCard", {productId: data._id, quantity: 1, price:data.price - (data.price / 100) * data.discount })
+      toast("product added to cart")
+    }catch(err){
+      console.log("err on adding cart");
+      
+    }
+    
   }
   return (
     <div className="p-2 flex flex-col justify-between bg-white w-fit rounded-md shadow-md relative min-h-[270px] cursor-pointer hover:scale-105 transition">
