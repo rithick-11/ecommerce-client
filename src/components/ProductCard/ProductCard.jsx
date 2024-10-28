@@ -1,49 +1,55 @@
 import React from "react";
-import server from "../../config/apiConfig"
-import { FaCartShopping } from "react-icons/fa6";
+import server from "../../config/apiConfig";
 import toast from "react-hot-toast";
+import { ShoppingBag } from "lucide-react";
 
 const ProductCard = ({ data }) => {
+  const { imgUrl, price, brand, discount, name } = data;
+
+  const discountPrice =
+    discount > 0 ? price - Math.round((price / 100) * discount) : price;
+
+  console.log(data);
 
   const onAddCart = async () => {
-    try{
-      await server.post("/api/users/addCard", {productId: data._id, quantity: 1, price:data.price - (data.price / 100) * data.discount })
-      toast("product added to cart")
-    }catch(err){
+    try {
+      await server.post("/api/users/addCard", {
+        productId: data._id,
+        quantity: 1,
+        price: discountPrice,
+      });
+      toast("product added to cart");
+    } catch (err) {
       console.log("err on adding cart");
-      
     }
-    
-  }
+  };
   return (
-    <div className="p-2 flex flex-col justify-between bg-white w-fit rounded-md shadow-md relative min-h-[270px] cursor-pointer hover:scale-105 transition">
+    <div className="product-card relative">
       <img
-        src={data.imgUrl}
-        alt={data.description}
-        className="aspect-square object-contain min-w-[90px] mx-auto"
+        src={imgUrl}
+        alt={name}
+        className="max-w-[90%] aspect-[2/3] object-contain mix-blend-color-burn mx-auto"
       />
 
-      <div className="flex flex-col gap-1">
-        <p className="text-sm">{data.description}</p>
-        <hr className="border-b  border-black" />
-        <div className="flex items-center justify-between">
-          <div className="text-black text-sm font-semibold flex flex-col gap-0 items-start">
-            <p>{data.price - (data.price / 100) * data.discount} Rs/-</p>
-            <p className="text-xs text-red-800 line-through">
-              {data.price} Rs/-
-            </p>
-          </div>
+      <p className="text-sm">{name}</p>
 
-          <button onClick={onAddCart} className="btn btn-primary flex gap-2 items-center">
-            Add <FaCartShopping className="text-green-500 h-5 w-5" />
-          </button>
+      <div className="flex gap-3">
+        <p className="font-bold">₹{discountPrice}</p>
+        <p className="text-red-500 line-through">₹{price}</p>
+      </div>
+      <div className="bg-green-500 absolute aspect-square p-1 flex justify-center items-center rounded-full top-2 right-2 text-primary font-bold ">
+        <p>-{discount}%</p>
+      </div>
+
+      {brand && (
+        <div className="absolute p-1 shadow-md bg-white rounded-md text-sm font-semibold">
+          <p>{brand}</p>
         </div>
-      </div>
+      )}
 
-      <div className="text-xs font-bold text-black shadow-md p-1  flex items-center justify-center bg-red-500 absolute top-2 right-2 z-10 rounded-full">
-      -off {data.discount}%
-      </div>
-      {data.brand && <p className="bg-gray-200 w-fit p-1 text-sm absolute top-2 left-2 shadow-md rounded-md">{data.brand}</p> }
+      <button onClick={onAddCart} className="btn btn-primary flex w-full items-center justify-center text-sm font-thin gap-2">
+        Add to cart <ShoppingBag />
+      </button>
     </div>
   );
 };

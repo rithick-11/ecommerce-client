@@ -1,7 +1,6 @@
 import {
   Heart,
   LeafyGreen,
-  Search,
   ShoppingBag,
   ShoppingCart,
   User,
